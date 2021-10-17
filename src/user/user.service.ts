@@ -34,4 +34,7 @@ export class UserService {
     async getAllTeachers(): Promise<UserEntity[]>{
         return await this.userRepository.find({ where:{userRoll: 'DOCENTE'}});
     }
+    async findeByUserName(userName: string){
+        return await this.userRepository.findOne({ userName });
+    }
 }
