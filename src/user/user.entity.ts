@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { hash } from "bcryptjs";
+import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import { UserEnum } from "./enum/user.enum";
 
 @Entity('user')
@@ -12,12 +13,15 @@ export class UserEntity{
     completeName: string;
     @Column({
         type: 'varchar',
-        length: 255
+        length: 255,
+        nullable: false,
     })
     userName: string;
     @Column({
         type: 'varchar',
-        length: 255
+        length: 255,
+        select: false,
+        nullable: false,
     })
     password: string;//auth
     @Column({
@@ -25,4 +29,13 @@ export class UserEntity{
         enum: UserEnum,
     })
     userRoll: UserEnum;
+
+    @BeforeInsert()
+    @BeforeUpdate()
+    async hasPassword(){
+        if(!this.password){
+            return;
+        }
+        this.password = await hash(this.password, 10)
+    }
 }
