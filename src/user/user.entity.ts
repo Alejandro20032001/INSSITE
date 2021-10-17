@@ -16,7 +16,7 @@ export class UserEntity{
         length: 255,
         nullable: false,
     })
-    userName: string;
+    username: string;
     @Column({
         type: 'varchar',
         length: 255,
