@@ -4,14 +4,18 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './user.entity';
 
+export interface FindByUsername {
+    idUser?: string;
+    username?: string;
+}
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(UserEntity)
         private readonly userRepository:Repository<UserEntity>,
     ){}
-    async createUser(createUserDto: CreateUserDto): Promise<UserEntity>{
-        const userExist = this.userRepository.findOne({userName: createUserDto.userName});
+    async createUser(createUserDto: CreateUserDto){
+        const userExist = await this.userRepository.findOne({username: createUserDto.username});
         if(userExist) throw await new BadRequestException('Username already exist');
 
         const userCreated = this.userRepository.create(createUserDto);
@@ -34,7 +38,12 @@ export class UserService {
     async getAllTeachers(): Promise<UserEntity[]>{
         return await this.userRepository.find({ where:{userRoll: 'DOCENTE'}});
     }
-    async findeByUserName(userName: string){
-        return await this.userRepository.findOne({ userName });
+    async findeByUserName(data: FindByUsername){
+        console.log()
+        return await this.userRepository
+            .createQueryBuilder('user')
+            .where(data)
+            .addSelect('user.password')
+            .getOne();
     }
 }
