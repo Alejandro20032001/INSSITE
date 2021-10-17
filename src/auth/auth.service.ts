@@ -8,6 +8,7 @@ import { UserService } from 'src/user/user.service';
 export class AuthService {
     constructor(
         private readonly userService: UserService,
+        private readonly jwtService: JwtService,
     ){}
 
     async validateUser(username:string, password :string){
@@ -19,4 +20,12 @@ export class AuthService {
        return null;
     }
 
+    login(user: UserEntity){
+        const { idUser, ...rest } = user;
+        const payload = { sub:idUser };
+        return {
+            user, 
+            accessToken: this.jwtService.sign(payload),
+        }
+    }
 }
