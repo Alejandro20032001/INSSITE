@@ -6,13 +6,14 @@ import { CourseService } from './course.service';
 @Controller('course')
 export class CourseController {
     constructor(private courseService: CourseService){}
-    @Post()
-    async createCourse(){
-        //falta
+    @Post('')
+    async createCourse(@Res() res, @Body() body: CreateCourseDto){
+        const courseCreated = await this.courseService.createCourse(body);
+        return res.status(HttpStatus.OK).json({
+            massage: 'created',
+            courseCreated,
+        })
     }
-
-    
-
     @Get('/:idCourse')
     async getUser(@Res() res, @Param('idCourse') idCourse: string) {
         const courseFounded = await this.courseService.getOneCourse(idCourse);

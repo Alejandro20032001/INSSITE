@@ -10,18 +10,16 @@ export class CourseService {
         @InjectRepository(CourseEntity)
         private readonly courseRepository:Repository<CourseEntity>,
     ){}
-    async createCourse(createUserDto: CreateCourseDto){
-        
-         // Falta
+    async createCourse(createCourseDto: CreateCourseDto){
+        const courseCreated = this.courseRepository.create(createCourseDto);
+        return this.courseRepository.save(courseCreated);
     }
     async getOneCourse(idCourse: string): Promise<CourseEntity> {
         const courseFounded = await this.courseRepository.findOne(idCourse);
         delete courseFounded.idCourse;
         return courseFounded;
     }
-
     async getAllCourses(): Promise<CourseEntity[]>{
         return await this.courseRepository.find({});
     }
-
 }
