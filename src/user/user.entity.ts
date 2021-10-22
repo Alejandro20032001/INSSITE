@@ -1,5 +1,6 @@
 import { hash } from "bcryptjs";
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { CourseEntity } from "src/course/couse.entity";
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { UserEnum } from "./enum/user.enum";
 
 @Entity('user')
@@ -38,4 +39,8 @@ export class UserEntity{
         }
         this.password = await hash(this.password, 10)
     }
+    @OneToMany(
+        () => CourseEntity, (course) => course.user
+    )
+    courses: CourseEntity[];
 }
