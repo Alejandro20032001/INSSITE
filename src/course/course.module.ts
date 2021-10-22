@@ -5,9 +5,9 @@ import { CourseEntity } from './couse.entity';
 import { CourseService } from './course.service';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([CourseEntity])],
+  imports: [TypeOrmModule.forFeature([CourseEntity])],
   controllers: [CourseController],
   providers: [CourseService],
-  exports: [CourseService]
+  exports: [CourseService],
 })
 export class CourseModule {}

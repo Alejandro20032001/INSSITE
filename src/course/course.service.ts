@@ -6,20 +6,20 @@ import { CourseEntity } from './couse.entity';
 
 @Injectable()
 export class CourseService {
-    constructor(
-        @InjectRepository(CourseEntity)
-        private readonly courseRepository:Repository<CourseEntity>,
-    ){}
-    async createCourse(createCourseDto: CreateCourseDto){
-        const courseCreated = this.courseRepository.create(createCourseDto);
-        return this.courseRepository.save(courseCreated);
-    }
-    async getOneCourse(idCourse: string): Promise<CourseEntity> {
-        const courseFounded = await this.courseRepository.findOne(idCourse);
-        delete courseFounded.idCourse;
-        return courseFounded;
-    }
-    async getAllCourses(): Promise<CourseEntity[]>{
-        return await this.courseRepository.find({});
-    }
+  constructor(
+    @InjectRepository(CourseEntity)
+    private readonly courseRepository: Repository<CourseEntity>,
+  ) {}
+  async createCourse(createCourseDto: CreateCourseDto) {
+    const courseCreated = this.courseRepository.create(createCourseDto);
+    return this.courseRepository.save(courseCreated);
+  }
+  async getOneCourse(idCourse: string): Promise<CourseEntity> {
+    const courseFounded = await this.courseRepository.findOne(idCourse);
+    delete courseFounded.idCourse;
+    return courseFounded;
+  }
+  async getAllCourses(): Promise<CourseEntity[]> {
+    return await this.courseRepository.find({});
+  }
 }

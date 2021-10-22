@@ -1,4 +1,4 @@
-export enum UserEnum{
-    ESTUDIANTE = 'ESTUDIANTE',
-    DOCENTE = 'DOCENTE'
+export enum UserEnum {
+  ESTUDIANTE = 'ESTUDIANTE',
+  DOCENTE = 'DOCENTE',
 }
