@@ -1,5 +1,5 @@
-import { hash } from "bcryptjs";
-import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { UserEntity } from "src/user/user.entity";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { CourseEnum } from "./enum/course.enum";
 
 
@@ -8,7 +8,8 @@ export class CourseEntity{
     @PrimaryGeneratedColumn('uuid')
     idCourse?: string;
     @Column({
-        type: 'integer'
+        type: 'varchar',
+        length:255,
     })
     courseName: string;
     @Column({
@@ -18,16 +19,21 @@ export class CourseEntity{
     })
     descriptionCourse: string;
     @Column({
-        type: 'varchar',
-        length: 1024,
-        nullable: false,
-    })
-    areaCourse: string;//auth
-    @Column({
         type: 'enum',
-        enum: CourseEnum,
+        nullable: false,
+        enum: CourseEnum
     })
-    userRoll: CourseEnum;
-
-    //Requiere before insert y before update???
+    areaCourse: CourseEnum;
+    @Column({
+        type: 'timestamp',
+    })
+    dateStartCourse: Date;
+    @Column({
+        type: 'timestamp',
+    })
+    dateStarEnrole: Date;
+    @ManyToOne(
+        () => UserEntity, (user) => user.courses
+    )
+    user = UserEntity;
 }
