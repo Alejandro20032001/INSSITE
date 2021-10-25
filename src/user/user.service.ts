@@ -1,5 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CourseEntity } from 'src/course/course.entity';
+import { CourseService } from 'src/course/course.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './user.entity';
@@ -50,5 +52,13 @@ export class UserService {
       .where(data)
       .addSelect('user.password')
       .getOne();
+  }
+  async getMyCourses(idUser: string): Promise<any[]> {
+    const courses = await this.userRepository.find({
+      relations: ['courses'],
+      where: { idUser },
+    });
+    console.log(courses);
+    return courses[0].courses;
   }
 }
