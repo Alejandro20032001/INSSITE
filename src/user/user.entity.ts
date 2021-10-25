@@ -37,6 +37,7 @@ export class UserEntity {
   @Column({
     type: 'enum',
     enum: UserEnum,
+    nullable: false,
   })
   userRoll: UserEnum;
 
