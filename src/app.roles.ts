@@ -9,9 +9,13 @@ export const roles: RolesBuilder = new RolesBuilder();
 
 roles
   .grant(UserEnum.DOCENTE)
-  .create([AppResources.COURSE])
+  .createOwn([AppResources.COURSE])
   .readOwn([AppResources.COURSE])
   .updateOwn([AppResources.COURSE])
+  .readAny([AppResources.USER])
 
   .grant(UserEnum.ESTUDIANTE)
-  .readOwn([AppResources.COURSE]);
+  .readOwn([AppResources.COURSE])
+  .updateOwn([AppResources.COURSE])
+  .create([AppResources.USER])
+  .updateAny([AppResources.COURSE]);

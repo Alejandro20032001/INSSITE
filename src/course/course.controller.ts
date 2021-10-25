@@ -8,12 +8,15 @@ import {
   Post,
   Put,
   Res,
+  UseGuards,
 } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { CourseService } from './course.service';
 import { Auth, User } from 'src/common';
 import { UserEntity } from 'src/user/user.entity';
 import { ApiTags } from '@nestjs/swagger';
+import { ACGuard, UseRoles } from 'nest-access-control';
+import { AppResources } from 'src/app.roles';
 
 @ApiTags('Course')
 @Controller('course')
@@ -44,6 +47,12 @@ export class CourseController {
     const coursesFounded = await this.courseService.getAllCourses();
     return res.status(HttpStatus.OK).json(coursesFounded);
   }
+  @UseGuards(ACGuard)
+  @UseRoles({
+    possession: 'any',
+    action: 'update',
+    resource: AppResources.COURSE,
+  })
   @Auth()
   @Put('/:idCourse')
   async enrollCourse(
