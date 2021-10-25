@@ -26,7 +26,6 @@ export class CourseController {
     @Body() body: CreateCourseDto,
     @User() userOwn: UserEntity,
   ) {
-    console.log(userOwn);
     const courseCreated = await this.courseService.createCourse(body, userOwn);
     return res.status(HttpStatus.OK).json({
       massage: 'created',

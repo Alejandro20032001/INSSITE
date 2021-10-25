@@ -17,13 +17,11 @@ export class CourseService {
     createCourseDto: CreateCourseDto,
     userOwn: UserEntity,
   ): Promise<CourseEntity> {
-    console.log(createCourseDto);
     const courseCreated = this.courseRepository.create({
       ...createCourseDto,
       userOwn,
     }); //ram
     const res = await this.courseRepository.save(courseCreated);
-    console.log(res);
     return res;
   }
   async getOneCourse(idCourse: string): Promise<CourseEntity> {
@@ -55,23 +53,10 @@ export class CourseService {
     const courseStudents = Object.assign(courseFounded, {
       userStudents,
     });
-    //console.log(array[0].userStudents);
-    /*
-    let students = array;
-    console.log(students);
-    if (students) {
-      students = [...students, user];
-    } else students = [user];
-    const courseStudents = Object.assign({
-      courseFounded,
-      userStudents: students,
-    });*/
-    //console.log(courseStudents);
     const c = this.courseRepository.create({
       idCourse: course,
       ...courseStudents,
     });
-    console.log(c);
     return await this.courseRepository.save(c);
   }
 }

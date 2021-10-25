@@ -17,7 +17,7 @@ import { roles } from './app.roles';
       username: 'bb0d82da493adf',
       password: 'c10e444f',
       database: 'heroku_42e4360e936cb76',
-      entities: [__dirname + './**//*entity{.ts,.js}'],
+      entities: [__dirname + './**/ /*entity{.ts,.js}'],
       autoLoadEntities: true,
       synchronize: true,
       */

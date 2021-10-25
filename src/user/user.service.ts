@@ -46,7 +46,6 @@ export class UserService {
     return await this.userRepository.find({ where: { userRoll: 'DOCENTE' } });
   }
   async findeByUserName(data: FindByUsername) {
-    console.log();
     return await this.userRepository
       .createQueryBuilder('user')
       .where(data)
@@ -58,7 +57,6 @@ export class UserService {
       relations: ['courses'],
       where: { idUser },
     });
-    console.log(courses);
     return courses[0].courses;
   }
 }
