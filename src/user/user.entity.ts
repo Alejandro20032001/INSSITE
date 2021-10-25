@@ -1,10 +1,12 @@
 import { hash } from 'bcryptjs';
-import { CourseEntity } from 'src/course/couse.entity';
+import { CourseEntity } from 'src/course/course.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
   Column,
   Entity,
+  ManyToMany,
+  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -46,6 +48,8 @@ export class UserEntity {
     }
     this.password = await hash(this.password, 10);
   }
-  @OneToMany(() => CourseEntity, (course) => course.user)
+  @ManyToMany(() => CourseEntity, (course) => course.userStudents)
   courses: CourseEntity[];
+  @OneToMany(() => CourseEntity, (course) => course.userOwn)
+  coursesCreated: CourseEntity[];
 }
