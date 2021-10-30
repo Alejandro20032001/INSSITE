@@ -46,17 +46,31 @@ export class UserService {
     return await this.userRepository.find({ where: { userRoll: 'DOCENTE' } });
   }
   async findeByUserName(data: FindByUsername) {
-    return await this.userRepository
+    const find = await this.userRepository
       .createQueryBuilder('user')
       .where(data)
       .addSelect('user.password')
       .getOne();
+    if (find.username !== data.username) return null;
+
+    return find;
   }
-  async getMyCourses(idUser: string): Promise<any[]> {
-    const courses = await this.userRepository.find({
-      relations: ['courses'],
-      where: { idUser },
-    });
+  async getMyCourses(user: UserEntity): Promise<any[]> {
+    let courses;
+    if (user.userRoll === 'ESTUDIANTE') {
+      const idUser = user.idUser;
+      courses = await this.userRepository.find({
+        relations: ['courses'],
+        where: { idUser },
+      });
+    }
+    if (user.userRoll === 'DOCENTE') {
+      const idUser = user.idUser;
+      courses = await this.userRepository.find({
+        relations: ['courses'],
+        where: { idUser },
+      });
+    }
     return courses[0].courses;
   }
 }

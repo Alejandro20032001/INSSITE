@@ -43,7 +43,7 @@ export class UserController {
   @Get('/courses')
   async getMyCourses(@Res() res, @User() user: UserEntity) {
     const idUser = user.idUser;
-    const coursesFounded = await this.userService.getMyCourses(idUser);
+    const coursesFounded = await this.userService.getMyCourses(user);
     return res.status(HttpStatus.OK).json(coursesFounded);
   }
 
