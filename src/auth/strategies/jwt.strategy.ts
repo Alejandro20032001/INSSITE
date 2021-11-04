@@ -7,11 +7,12 @@ import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private userService: UserService ){//private config: ConfigService) {
+  constructor(private userService: UserService) {
+    //private config: ConfigService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: 'inssite-secret-jwt'
+      secretOrKey: 'inssite-secret-jwt',
       //secretOrKey: config.get<string>(JWT_SECRET),
     });
   }
