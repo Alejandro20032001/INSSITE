@@ -25,7 +25,11 @@ export class CourseController {
     @InjectRolesBuilder()
     private readonly rolesBuilder: RolesBuilder,
   ) {}
-  @Auth()
+  @Auth({
+    possession: 'own',
+    action: 'create',
+    resource: AppResources.COURSE,
+  })
   @Post('')
   async createCourse(
     @Res() res,
