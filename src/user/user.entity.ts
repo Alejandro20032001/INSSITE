@@ -6,7 +6,6 @@ import {
   Column,
   Entity,
   ManyToMany,
-  ManyToOne,
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -35,11 +34,10 @@ export class UserEntity {
   })
   password: string; //auth
   @Column({
-    type: 'enum',
-    enum: UserEnum,
+    type: 'simple-array',
     nullable: false,
   })
-  userRoll: UserEnum;
+  roles: UserEnum[];
 
   @BeforeInsert()
   @BeforeUpdate()
