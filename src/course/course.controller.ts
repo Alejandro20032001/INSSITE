@@ -8,20 +8,23 @@ import {
   Post,
   Put,
   Res,
-  UseGuards,
 } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { CourseService } from './course.service';
 import { Auth, User } from 'src/common';
 import { UserEntity } from 'src/user/user.entity';
 import { ApiTags } from '@nestjs/swagger';
-import { ACGuard, UseRoles } from 'nest-access-control';
+import { InjectRolesBuilder, RolesBuilder } from 'nest-access-control';
 import { AppResources } from 'src/app.roles';
 
 @ApiTags('Course')
 @Controller('course')
 export class CourseController {
-  constructor(private courseService: CourseService) {}
+  constructor(
+    private courseService: CourseService,
+    @InjectRolesBuilder()
+    private readonly rolesBuilder: RolesBuilder,
+  ) {}
   @Auth()
   @Post('')
   async createCourse(
@@ -47,21 +50,26 @@ export class CourseController {
     const coursesFounded = await this.courseService.getAllCourses();
     return res.status(HttpStatus.OK).json(coursesFounded);
   }
-  @UseGuards(ACGuard)
-  @UseRoles({
+  @Auth({
     possession: 'any',
     action: 'update',
     resource: AppResources.COURSE,
   })
-  @Auth()
   @Put('/:idCourse')
   async enrollCourse(
     @Res() res,
     @Param('idCourse') idCourse: string,
-    @User() user,
+    @User() user: UserEntity,
   ) {
-    const newCourse = await this.courseService.enrollCourse(user, idCourse);
-    return res.status(HttpStatus.OK).json(newCourse);
+    if (
+      this.rolesBuilder.can(user.roles).updateAny(AppResources.COURSE).granted
+    ) {
+      const newCourse = await this.courseService.enrollCourse(user, idCourse);
+      return res.status(HttpStatus.OK).json(newCourse);
+    } else
+      return res
+        .status(HttpStatus.FORBIDDEN)
+        .json({ message: 'Not an estudent' });
   }
   @Auth()
   @Get('/students/:idCourse')
