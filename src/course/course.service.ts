@@ -58,4 +58,7 @@ export class CourseService {
     });
     return await this.courseRepository.save(c);
   }
+  async getAllCoursesFromTeacher(idTeacher: string) {
+    return await this.courseRepository.find({ where: { userOwn: idTeacher } });
+  }
 }

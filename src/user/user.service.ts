@@ -1,5 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CourseEntity } from 'src/course/course.entity';
+import { CourseService } from 'src/course/course.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './user.entity';
@@ -11,6 +13,7 @@ export interface FindByUsername {
 @Injectable()
 export class UserService {
   constructor(
+    private readonly courseService: CourseService,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) {}
@@ -37,11 +40,11 @@ export class UserService {
   }
   async getAllStudents(): Promise<UserEntity[]> {
     return await this.userRepository.find({
-      where: { userRoll: 'ESTUDIANTE' },
+      where: { roles: ['ESTUDIANTE'] },
     });
   }
   async getAllTeachers(): Promise<UserEntity[]> {
-    return await this.userRepository.find({ where: { userRoll: 'DOCENTE' } });
+    return await this.userRepository.find({ where: { roles: ['DOCENTE'] } });
   }
   async findeByUserName(data: FindByUsername) {
     const find = await this.userRepository
@@ -53,7 +56,7 @@ export class UserService {
 
     return find;
   }
-  async getMyCourses(user: UserEntity): Promise<any[]> {
+  async getMyCourses(user: UserEntity): Promise<CourseEntity[]> {
     let courses;
     if (user.roles[0] === 'ESTUDIANTE') {
       const idUser = user.idUser;
@@ -61,14 +64,11 @@ export class UserService {
         relations: ['courses'],
         where: { idUser },
       });
-    }
-    if (user.roles[0] === 'DOCENTE') {
+    } else if (user.roles[0] === 'DOCENTE') {
       const idUser = user.idUser;
-      courses = await this.userRepository.find({
-        relations: ['courses'],
-        where: { idUser },
-      });
+      courses = await this.courseService.getAllCoursesFromTeacher(idUser);
+      console.log('funciona');
     }
-    return courses[0].courses;
+    return courses;
   }
 }
