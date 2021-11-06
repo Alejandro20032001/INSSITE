@@ -1,12 +1,10 @@
 import { UserEntity } from '../user/user.entity';
 import {
   Column,
-  CreateDateColumn,
   Entity,
   JoinTable,
   ManyToMany,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CourseEnum } from './enum/course.enum';
