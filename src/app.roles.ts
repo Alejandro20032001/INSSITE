@@ -15,7 +15,5 @@ roles
   .readAny([AppResources.USER])
 
   .grant(UserEnum.ESTUDIANTE)
-  .readOwn([AppResources.COURSE])
-  .updateOwn([AppResources.COURSE])
-  .create([AppResources.USER])
+  .readAny([AppResources.COURSE])
   .updateAny([AppResources.COURSE]);
