@@ -67,9 +67,7 @@ export class UserService {
     } else if (user.roles[0] === 'DOCENTE') {
       const idUser = user.idUser;
       courses = await this.courseService.getAllCoursesFromTeacher(idUser);
-      console.log('funciona');
     }
-    console.log(courses[0].courses);
     return courses[0].courses;
   }
 }
