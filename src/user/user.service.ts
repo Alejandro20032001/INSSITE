@@ -69,6 +69,7 @@ export class UserService {
       courses = await this.courseService.getAllCoursesFromTeacher(idUser);
       console.log('funciona');
     }
-    return courses;
+    console.log(courses[0].courses);
+    return courses[0].courses;
   }
 }
