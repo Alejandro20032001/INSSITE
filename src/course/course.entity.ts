@@ -53,7 +53,7 @@ export class CourseEntity {
   @JoinTable()
   userOwn: UserEntity;
 
-  @OneToMany(() => CourseModuleEntity, (coursemodule) => coursemodule.modules)
+  @OneToMany(() => CourseModuleEntity, (coursemodule) => coursemodule.course)
   @JoinTable()
-  modulescourse: CourseModuleEntity[];
+  modules: CourseModuleEntity[];
 }
