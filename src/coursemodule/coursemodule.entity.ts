@@ -3,7 +3,6 @@ import {
   Column,
   Entity,
   JoinTable,
-  ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -11,8 +10,7 @@ import {
 @Entity('module')
 export class CourseModuleEntity {
   @PrimaryGeneratedColumn('uuid')
-
-  idModule?: number;
+  idModule?: string;
 
   @Column({
     type: 'varchar',
@@ -29,9 +27,11 @@ export class CourseModuleEntity {
     type: 'integer',
     nullable: false,
   })
-  areaCourse: number;
-  
-  @ManyToOne(() => CourseEntity, (course) => course.modulescourse, { eager: true })
+  durationModule: number;
+
+  @ManyToOne(() => CourseEntity, (course) => course.modules, {
+    eager: true,
+  })
   @JoinTable()
-  modules: CourseEntity;
+  course: CourseEntity;
 }
