@@ -1,10 +1,12 @@
 import { UserEntity } from '../user/user.entity';
+import { CourseModuleEntity } from '../coursemodule/coursemodule.entity';
 import {
   Column,
   Entity,
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { CourseEnum } from './enum/course.enum';
@@ -12,7 +14,7 @@ import { CourseEnum } from './enum/course.enum';
 @Entity('course')
 export class CourseEntity {
   @PrimaryGeneratedColumn('uuid')
-  idCourse?: string;
+  idCourse?: number;
   @Column({
     type: 'varchar',
     length: 255,
@@ -46,7 +48,12 @@ export class CourseEntity {
   @ManyToMany(() => UserEntity, (user) => user.courses)
   @JoinTable()
   userStudents: UserEntity[];
+
   @ManyToOne(() => UserEntity, (user) => user.courses, { eager: true })
   @JoinTable()
   userOwn: UserEntity;
+
+  @OneToMany(() => CourseModuleEntity, (coursemodule) => coursemodule.modules)
+  @JoinTable()
+  modulescourse: CourseModuleEntity[];
 }
