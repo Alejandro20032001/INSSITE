@@ -34,3 +34,4 @@ export class CourseModuleEntity {
   @ManyToOne(() => CourseEntity, (course) => course.modulescourse, { eager: true })
   @JoinTable()
   modules: CourseEntity;
+}

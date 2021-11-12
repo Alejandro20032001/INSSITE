@@ -25,14 +25,17 @@ export class CoursemoduleController {
     @InjectRolesBuilder()
     private readonly rolesBuilder: RolesBuilder,
   ) {}
- 
+
   @Post('')
   async createModule(
     @Res() res,
     @Body() body: CreateModuleDto,
     @Course() courseOwn: CourseEntity,
   ) {
-    const moduleCreated = await this.coursemoduleService.createModule(body, courseOwn);
+    const moduleCreated = await this.coursemoduleService.createModule(
+      body,
+      courseOwn,
+    );
     return res.status(HttpStatus.OK).json({
       massage: 'created',
       moduleCreated,
@@ -50,7 +53,7 @@ export class CoursemoduleController {
     const modulesFounded = await this.coursemoduleService.getAllModules();
     return res.status(HttpStatus.OK).json(modulesFounded);
   }
-  
+
   @Get('/modules/:idCourse')
   async getModulesFromCourse(@Res() res, @Param('idCourse') idCourse: string) {
     const students = await this.coursemoduleService.getAllModulesFromCourse(
@@ -58,5 +61,4 @@ export class CoursemoduleController {
     );
     return res.status(HttpStatus.OK).json(students);
   }
-
 }

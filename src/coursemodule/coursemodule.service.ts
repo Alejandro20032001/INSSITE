@@ -34,7 +34,7 @@ export class CoursemoduleService {
   async getAllModulesFromCourse(course: string): Promise<CourseModuleEntity[]> {
     const modules = await this.coursemoduleRepository.find({
       relations: ['courseModules'],
-      where: { idCourse: course},
+      where: { idCourse: course },
     });
     return modules[0].modulescourse;
   }
