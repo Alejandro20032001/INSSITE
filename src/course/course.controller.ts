@@ -83,4 +83,11 @@ export class CourseController {
     );
     return res.status(HttpStatus.OK).json(students);
   }
+  @Get('/modules/:idCourse')
+  async getModulesFromCourse(@Res() res, @Param('idCourse') idCourse: string) {
+    const modules = await this.courseService.getAllModulesFromThisCourse(
+      idCourse,
+    );
+    return res.status(HttpStatus.OK).json(modules);
+  }
 }
