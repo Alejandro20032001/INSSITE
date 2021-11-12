@@ -49,7 +49,6 @@ export class UserEntity {
   }
   @ManyToMany(() => CourseEntity, (course) => course.userStudents)
   courses: CourseEntity[];
-
   @OneToMany(() => CourseEntity, (course) => course.userOwn)
   coursesCreated: CourseEntity[];
 }

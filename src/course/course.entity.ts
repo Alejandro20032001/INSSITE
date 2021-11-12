@@ -14,7 +14,7 @@ import { CourseEnum } from './enum/course.enum';
 @Entity('course')
 export class CourseEntity {
   @PrimaryGeneratedColumn('uuid')
-  idCourse?: number;
+  idCourse?: string;
   @Column({
     type: 'varchar',
     length: 255,
