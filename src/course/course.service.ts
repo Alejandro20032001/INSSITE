@@ -5,6 +5,7 @@ import { CreateCourseDto } from './dto/create-course.dto';
 import { CourseEntity } from './course.entity';
 import { UserEntity } from 'src/user/user.entity';
 import { User } from 'src/common';
+import { CourseModuleEntity } from 'src/coursemodule/coursemodule.entity';
 
 @Injectable()
 export class CourseService {
@@ -60,5 +61,15 @@ export class CourseService {
   }
   async getAllCoursesFromTeacher(idTeacher: string) {
     return await this.courseRepository.find({ where: { userOwn: idTeacher } });
+  }
+  async getAllModulesFromThisCourse(
+    course: string,
+  ): Promise<CourseModuleEntity[]> {
+    const modules = await this.courseRepository.find({
+      relations: ['modules'],
+      where: { idCourse: course },
+    });
+    console.log(modules);
+    return modules[0].modules;
   }
 }
