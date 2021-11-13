@@ -16,6 +16,7 @@ import {
   DATABASE_USERNAME,
 } from './config/constants';
 import { CoursemoduleModule } from './coursemodule/coursemodule.module';
+import { ResourceModule } from './resource/resource.module';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -41,6 +42,7 @@ import { CoursemoduleModule } from './coursemodule/coursemodule.module';
     UserModule,
     CourseModule,
     CoursemoduleModule,
+    ResourceModule,
   ],
 
   controllers: [AppController],
