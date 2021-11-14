@@ -1,9 +1,11 @@
 import { CourseEntity } from '../course/course.entity';
+import { ResourceEntity } from '../resource/resource.entity';
 import {
   Column,
   Entity,
   JoinTable,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -34,4 +36,8 @@ export class CourseModuleEntity {
   })
   @JoinTable()
   course: CourseEntity;
+
+  @OneToMany(() => ResourceEntity, (resource) => resource.module)
+  @JoinTable()
+  resources: ResourceEntity[];
 }
