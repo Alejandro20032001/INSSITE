@@ -6,6 +6,5 @@ import { ResourceService } from './resource.service';
 export class ResourceController {
   constructor(private resourceService: ResourceService) {}
   @Post()
-  async createResource(@Res() res, @Body() body: CreateResourceDto){
-  }
+  async createResource(@Res() res, @Body() body: CreateResourceDto) {}
 }
