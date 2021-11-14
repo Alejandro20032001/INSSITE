@@ -1,0 +1,6 @@
+export enum ResourceEnum {
+  LINK_MEET = 'LINK MEET',
+  DOCUMENTATION = 'DOCUMENTACION',
+  HOMEWORK = 'TAREA',
+  LINK_MATERIAL = 'LINK A MATERIAL',
+}
