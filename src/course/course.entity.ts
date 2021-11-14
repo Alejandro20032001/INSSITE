@@ -30,19 +30,14 @@ export class CourseEntity {
     enum: CourseEnum,
   })
   areaCourse: CourseEnum;
-  /*@Column({
-    type: 'timestamp',
+  @Column({
+    type: 'date',
   })
   dateStartCourse: Date;
   @Column({
-    type: 'timestamp',
+    type: 'date',
   })
   dateStartEnrole: Date;
-  @CreateDateColumn({
-    name: 'create_at',
-    type: 'timestamp',
-  })
-  createAt: Date;*/
   @ManyToMany(() => UserEntity, (user) => user.courses)
   @JoinTable()
   userStudents: UserEntity[];
