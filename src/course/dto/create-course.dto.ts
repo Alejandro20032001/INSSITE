@@ -4,4 +4,6 @@ export class CreateCourseDto {
   courseName: string;
   descriptionCourse: string;
   areaCourse: CourseEnum;
+  dateStartCourse: Date;
+  dateStartEnrole: Date;
 }
