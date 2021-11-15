@@ -69,7 +69,6 @@ export class CourseService {
       relations: ['modules'],
       where: { idCourse: course },
     });
-    console.log(modules);
     return modules[0].modules;
   }
 }
