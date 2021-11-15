@@ -6,12 +6,17 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { ResourceEnum } from './enum/resource.enum';
 
 @Entity('resource')
 export class ResourceEntity {
   @PrimaryGeneratedColumn('uuid')
   idResource?: string;
-
+  @Column({
+    type: 'enum',
+    enum: ResourceEnum,
+  })
+  resourceType: ResourceEnum;
   @Column({
     type: 'varchar',
     length: 64,
@@ -27,9 +32,13 @@ export class ResourceEntity {
     type: 'varchar',
     nullable: true,
   })
-  resourceContent: number;
-
-  @ManyToOne(() => CourseModuleEntity, (moduleR) => moduleR.resources, {
+  content: string;
+  @Column({
+    type: 'varchar',
+    nullable: true,
+  })
+  ruteDocuments: string;
+  @ManyToOne(() => CourseModuleEntity, (module) => module.resources, {
     eager: true,
   })
   @JoinTable()
