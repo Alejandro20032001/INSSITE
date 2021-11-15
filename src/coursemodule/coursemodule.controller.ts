@@ -42,4 +42,9 @@ export class CoursemoduleController {
     const modulesFounded = await this.coursemoduleService.getAllModules();
     return res.status(HttpStatus.OK).json(modulesFounded);
   }
+  @Get('/resources/:idModule')
+  async getResources(@Res() res, @Param('idModule') idModule: string) {
+    const resources = await this.coursemoduleService.getResources(idModule);
+    return res.status(HttpStatus.OK).json(resources);
+  }
 }
