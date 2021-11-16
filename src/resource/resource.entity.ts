@@ -20,6 +20,7 @@ export class ResourceEntity {
   @Column({
     type: 'varchar',
     length: 64,
+    nullable: true,
   })
   title: string;
   @Column({
@@ -33,6 +34,17 @@ export class ResourceEntity {
     nullable: true,
   })
   content: string;
+
+  @Column({
+    type: 'timestamp',
+    nullable: true,
+  })
+  date: Date;
+  @Column({
+    type: 'int',
+    nullable: true,
+  })
+  score: number;
   @Column({
     type: 'varchar',
     nullable: true,
