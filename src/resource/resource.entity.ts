@@ -51,6 +51,7 @@ export class ResourceEntity {
   })
   ruteDocuments: string;
   @ManyToOne(() => CourseModuleEntity, (module) => module.resources, {
+    onDelete: 'CASCADE',
     eager: true,
   })
   @JoinTable()

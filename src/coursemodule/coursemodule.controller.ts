@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpStatus,
   NotFoundException,
@@ -12,6 +13,9 @@ import { CreateModuleDto } from './dto/create-module.dto';
 import { CoursemoduleService } from './coursemodule.service';
 import { ApiTags } from '@nestjs/swagger';
 import { InjectRolesBuilder, RolesBuilder } from 'nest-access-control';
+import { User } from 'src/common';
+import { UserEntity } from 'src/user/user.entity';
+import { AppResources } from 'src/app.roles';
 
 @ApiTags('Module')
 @Controller('coursemodule')
@@ -46,5 +50,26 @@ export class CoursemoduleController {
   async getResources(@Res() res, @Param('idModule') idModule: string) {
     const resources = await this.coursemoduleService.getResources(idModule);
     return res.status(HttpStatus.OK).json(resources);
+  }
+  @Delete('/:idModule')
+  async deleteResource(
+    @Res() res,
+    @Param('idModule') idModule: string,
+    @User() user: UserEntity,
+  ) {
+    if (
+      this.rolesBuilder.can(user.roles).deleteOwn(AppResources.RESOURCE).granted
+    ) {
+      const moduleDeleted = await this.coursemoduleService.deleteModule(
+        idModule,
+      );
+      return res.status(HttpStatus.OK).json({
+        message: 'deleted',
+        moduleDeleted,
+      });
+    } else
+      return res
+        .status(HttpStatus.FORBIDDEN)
+        .json({ message: 'This is not your resource' });
   }
 }

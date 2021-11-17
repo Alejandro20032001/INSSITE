@@ -33,4 +33,7 @@ export class CoursemoduleService {
     console.log(resources);
     return resources[0].resources;
   }
+  async deleteModule(idModule: string) {
+    return await this.coursemoduleRepository.delete(idModule);
+  }
 }
