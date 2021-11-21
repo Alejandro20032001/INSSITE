@@ -13,7 +13,7 @@ import { CreateModuleDto } from './dto/create-module.dto';
 import { CoursemoduleService } from './coursemodule.service';
 import { ApiTags } from '@nestjs/swagger';
 import { InjectRolesBuilder, RolesBuilder } from 'nest-access-control';
-import { User } from 'src/common';
+import { Auth, User } from 'src/common';
 import { UserEntity } from 'src/user/user.entity';
 import { AppResources } from 'src/app.roles';
 
@@ -51,6 +51,11 @@ export class CoursemoduleController {
     const resources = await this.coursemoduleService.getResources(idModule);
     return res.status(HttpStatus.OK).json(resources);
   }
+  @Auth({
+    possession: 'own',
+    action: 'delete',
+    resource: AppResources.MODULE,
+  })
   @Delete('/:idModule')
   async deleteResource(
     @Res() res,
@@ -58,7 +63,7 @@ export class CoursemoduleController {
     @User() user: UserEntity,
   ) {
     if (
-      this.rolesBuilder.can(user.roles).deleteOwn(AppResources.RESOURCE).granted
+      this.rolesBuilder.can(user.roles).deleteOwn(AppResources.MODULE).granted
     ) {
       const moduleDeleted = await this.coursemoduleService.deleteModule(
         idModule,
