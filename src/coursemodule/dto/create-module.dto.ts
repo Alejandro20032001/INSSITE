@@ -5,4 +5,5 @@ export class CreateModuleDto {
   descriptionModule: string;
   durationModule: number;
   course: CourseEntity;
+  orderModule: number;
 }

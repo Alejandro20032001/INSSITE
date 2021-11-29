@@ -30,7 +30,11 @@ export class CourseModuleEntity {
     nullable: false,
   })
   durationModule: number;
-
+  @Column({
+    type: 'integer',
+    nullable: false,
+  })
+  orderModule: number;
   @ManyToOne(() => CourseEntity, (course) => course.modules, {
     eager: true,
   })

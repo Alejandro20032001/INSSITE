@@ -27,11 +27,11 @@ export class CourseEntity {
   })
   descriptionCourse: string;
   @Column({
-    type: 'enum',
+    type: 'varchar',
+    length: 255,
     nullable: false,
-    enum: CourseEnum,
   })
-  areaCourse: CourseEnum;
+  areaCourse: string;
   @Column({
     type: 'date',
   })
