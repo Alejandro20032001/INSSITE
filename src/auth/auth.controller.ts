@@ -16,7 +16,7 @@ export class AuthController {
   async login(@Body() logindto: LoginDto, @User() user: UserEntity) {
     const data = await this.authService.login(user);
     return {
-      massage: 'Successfull login',
+      message: 'Successfull login',
       data,
     };
   }
@@ -34,7 +34,7 @@ export class AuthController {
   refreshToken(@User() user: UserEntity) {
     const data = this.authService.login(user);
     return {
-      massage: 'Refresh ok',
+      message: 'Refresh ok',
       data,
     };
   }

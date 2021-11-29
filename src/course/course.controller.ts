@@ -38,7 +38,7 @@ export class CourseController {
   ) {
     const courseCreated = await this.courseService.createCourse(body, userOwn);
     return res.status(HttpStatus.OK).json({
-      massage: 'created',
+      message: 'created',
       courseCreated,
     });
   }

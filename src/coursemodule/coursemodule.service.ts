@@ -30,7 +30,7 @@ export class CoursemoduleService {
       relations: ['resources'],
       where: { idModule: module },
     });
-    console.log(resources);
+    //console.log(resources);
     return resources[0].resources;
   }
   async deleteModule(idModule: string) {

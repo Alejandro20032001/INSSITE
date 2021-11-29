@@ -22,7 +22,7 @@ export class UserController {
   async createUser(@Res() res, @Body() body: CreateUserDto) {
     const userCreated = await this.userService.createUser(body);
     return res.status(HttpStatus.OK).json({
-      massage: 'created',
+      message: 'created',
       userCreated,
     });
   }

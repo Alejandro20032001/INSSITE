@@ -30,7 +30,7 @@ export class CoursemoduleController {
   async createModule(@Res() res, @Body() body: CreateModuleDto) {
     const moduleCreated = await this.coursemoduleService.createModule(body);
     return res.status(HttpStatus.OK).json({
-      massage: 'created',
+      message: 'created',
       moduleCreated,
     });
   }
