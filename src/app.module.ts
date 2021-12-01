@@ -17,6 +17,7 @@ import {
 } from './config/constants';
 import { CoursemoduleModule } from './coursemodule/coursemodule.module';
 import { ResourceModule } from './resource/resource.module';
+import { HomeworkModule } from './homework/homework.module';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
@@ -43,6 +44,7 @@ import { ResourceModule } from './resource/resource.module';
     CourseModule,
     CoursemoduleModule,
     ResourceModule,
+    HomeworkModule,
   ],
 
   controllers: [AppController],
