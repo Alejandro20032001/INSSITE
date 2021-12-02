@@ -1,9 +1,11 @@
 import { CourseModuleEntity } from '../coursemodule/coursemodule.entity';
+import { HomeworkEntity } from 'src/homework/homework.entity';
 import {
   Column,
   Entity,
   JoinTable,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ResourceEnum } from './enum/resource.enum';
@@ -56,4 +58,6 @@ export class ResourceEntity {
   })
   @JoinTable()
   module: CourseModuleEntity;
+  @OneToMany(() => HomeworkEntity, (homework) => homework.resource)
+  homeworks: HomeworkEntity[];
 }

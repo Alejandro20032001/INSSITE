@@ -1,5 +1,6 @@
 import { hash } from 'bcryptjs';
 import { CourseEntity } from 'src/course/course.entity';
+import { HomeworkEntity } from 'src/homework/homework.entity';
 import {
   BeforeInsert,
   BeforeUpdate,
@@ -7,6 +8,7 @@ import {
   Entity,
   ManyToMany,
   OneToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserEnum } from './enum/user.enum';
@@ -51,4 +53,7 @@ export class UserEntity {
   courses: CourseEntity[];
   @OneToMany(() => CourseEntity, (course) => course.userOwn)
   coursesCreated: CourseEntity[];
+
+  @OneToOne(() => HomeworkEntity, (homework) => homework.userDone)
+  homework: HomeworkEntity;
 }

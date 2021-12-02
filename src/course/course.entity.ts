@@ -1,5 +1,6 @@
 import { UserEntity } from '../user/user.entity';
 import { CourseModuleEntity } from '../coursemodule/coursemodule.entity';
+import { HomeworkEntity } from 'src/homework/homework.entity';
 import {
   Column,
   Entity,
@@ -51,4 +52,6 @@ export class CourseEntity {
   @OneToMany(() => CourseModuleEntity, (coursemodule) => coursemodule.course)
   @JoinTable()
   modules: CourseModuleEntity[];
+  @OneToMany(() => HomeworkEntity, (homework) => homework.course)
+  homeworks: HomeworkEntity[];
 }

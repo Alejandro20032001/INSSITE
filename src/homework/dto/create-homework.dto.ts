@@ -2,8 +2,9 @@
 //import { CourseEntity } from '../../course/course.entity';
 //import { UserEntity } from '../../user/user.entity';
 export class CreateHomeworkDto {
-  idstudent: string;
-  idteacher: string;
-  idcourse: string;
+  idStudent: string;
+  idResource: string;
+  idCourse: string;
+  content: string;
   score: number;
 }
