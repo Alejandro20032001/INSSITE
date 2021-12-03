@@ -42,5 +42,4 @@ export class HomeworkService {
     const homeworks = await this.userRepository.findOne(student);
     return homeworks;
   }
-  
 }

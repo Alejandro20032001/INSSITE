@@ -22,7 +22,7 @@ import { AppResources } from 'src/app.roles';
 @ApiTags('Homework')
 export class HomeworkController {
   constructor(private homeworkService: HomeworkService) {}
-  
+
   @Post('')
   async createHomework(
     @Res() res,
@@ -45,7 +45,6 @@ export class HomeworkController {
     return res.status(HttpStatus.OK).json(homeworksFounded);
   }
 
-  
   @Get('/homeworks/:idResource')
   async getAllHomeworksFromResource(
     @Res() res,
@@ -56,5 +55,4 @@ export class HomeworkController {
     );
     return res.status(HttpStatus.OK).json(homeworks);
   }
-  
 }
