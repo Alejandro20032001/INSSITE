@@ -2,6 +2,9 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CourseEntity } from 'src/course/course.entity';
 import { CourseService } from 'src/course/course.service';
+import { CoursemoduleService } from 'src/coursemodule/coursemodule.service';
+import { HomeworkEntity } from 'src/homework/homework.entity';
+import { HomeworkService } from 'src/homework/homework.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './user.entity';
@@ -14,6 +17,7 @@ export interface FindByUsername {
 export class UserService {
   constructor(
     private readonly courseService: CourseService,
+    private readonly moduleService: CoursemoduleService,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) {}
@@ -69,5 +73,30 @@ export class UserService {
       courses = await this.courseService.getAllCoursesFromTeacher(idUser);
     }
     return courses[0].courses;
+  }
+  async getMyHomeworks(user: UserEntity): Promise<HomeworkEntity[]> {
+    let homework;
+    if (user.roles[0] === 'ESTUDIANTE') {
+      const idUser = user.idUser;
+      homework = await this.userRepository.find({
+        relations: ['homeworks'],
+        where: { idUser },
+      });
+    }
+    return homework[0].homeworks;
+  }
+
+  async getTotalToDo(idCourse: string): Promise<number> {
+    const modules = await this.courseService.getAllModulesFromThisCourse(
+      idCourse,
+    );
+    let cont = 0;
+    for (let i = 0; i < (await modules).length; i++) {
+      const tareas = await this.moduleService.getHomeworksToDo(
+        modules[i].idModule,
+      );
+      cont = cont + (await tareas).length;
+    }
+    return cont;
   }
 }
