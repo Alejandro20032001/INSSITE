@@ -36,4 +36,12 @@ export class CoursemoduleService {
   async deleteModule(idModule: string) {
     return await this.coursemoduleRepository.delete(idModule);
   }
+  async getHomeworksToDo(idModule: string): Promise<ResourceEntity[]> {
+    const homeworks = await this.getResources(idModule);
+    const answer = [];
+    for (let i = 0; i < (await homeworks).length; i++) {
+      if (homeworks[i].resourceType === 'TAREA') answer.push(homeworks[i]);
+    }
+    return answer;
+  }
 }
