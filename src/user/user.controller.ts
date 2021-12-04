@@ -38,6 +38,13 @@ export class UserController {
     const teachersFounded = await this.userService.getAllTeachers();
     return res.status(HttpStatus.OK).json(teachersFounded);
   }
+  @Auth()
+  @Get('/homeworks')
+  async getMyhomeworks(@Res() res, @User() user: UserEntity) {
+    const idUser = user.idUser;
+    const homeworks = await this.userService.getMyHomeworks(user);
+    return res.status(HttpStatus.OK).json(homeworks);
+  }
 
   @Auth()
   @Get('/courses')
@@ -58,5 +65,21 @@ export class UserController {
   async getAllUsers(@Res() res) {
     const usersFounded = await this.userService.getAllUsers();
     return res.status(HttpStatus.OK).json(usersFounded);
+  }
+
+  @Auth()
+  @Get('/processOf/:idCourse')
+  async getProcessOfCourse(
+    @Res() res,
+    @Param('idCourse') idCourse: string,
+    @User() user,
+  ) {
+    const tareasHechas = (await this.userService.getMyHomeworks(user)).length;
+    const tareasTotales = await this.userService.getTotalToDo(idCourse);
+    //console.log(tareasTotales);
+    res.status(HttpStatus.OK).json({
+      hechas: tareasHechas,
+      totales: tareasTotales,
+    });
   }
 }
