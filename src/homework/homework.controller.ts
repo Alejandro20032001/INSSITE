@@ -23,6 +23,7 @@ import { AppResources } from 'src/app.roles';
 export class HomeworkController {
   constructor(private homeworkService: HomeworkService) {}
 
+  @Auth()
   @Post('')
   async createHomework(
     @Res() res,
@@ -45,7 +46,7 @@ export class HomeworkController {
     return res.status(HttpStatus.OK).json(homeworksFounded);
   }
 
-  @Get('/homeworks/:idResource')
+  /*@Get('/homeworks/:idResource')
   async getAllHomeworksFromResource(
     @Res() res,
     @Param('idResource') idResource: string,
@@ -54,5 +55,5 @@ export class HomeworkController {
       idResource,
     );
     return res.status(HttpStatus.OK).json(homeworks);
-  }
+  }*/
 }
