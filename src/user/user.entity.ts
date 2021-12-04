@@ -6,6 +6,7 @@ import {
   BeforeUpdate,
   Column,
   Entity,
+  JoinTable,
   ManyToMany,
   OneToMany,
   OneToOne,
@@ -54,6 +55,7 @@ export class UserEntity {
   @OneToMany(() => CourseEntity, (course) => course.userOwn)
   coursesCreated: CourseEntity[];
 
-  @OneToOne(() => HomeworkEntity, (homework) => homework.userDone)
-  homework: HomeworkEntity;
+  @OneToMany(() => HomeworkEntity, (homework) => homework.userDone)
+  @JoinTable()
+  homeworks: HomeworkEntity[];
 }
