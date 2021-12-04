@@ -42,22 +42,27 @@ export class ResourceEntity {
     nullable: true,
   })
   date: Date;
+
   @Column({
     type: 'int',
     nullable: true,
   })
   score: number;
+
   @Column({
     type: 'varchar',
     nullable: true,
   })
   ruteDocuments: string;
+
   @ManyToOne(() => CourseModuleEntity, (module) => module.resources, {
     onDelete: 'CASCADE',
     eager: true,
   })
   @JoinTable()
   module: CourseModuleEntity;
+
   @OneToMany(() => HomeworkEntity, (homework) => homework.resource)
+  @JoinTable()
   homeworks: HomeworkEntity[];
 }
