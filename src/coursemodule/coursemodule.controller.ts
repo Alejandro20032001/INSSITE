@@ -16,6 +16,7 @@ import { InjectRolesBuilder, RolesBuilder } from 'nest-access-control';
 import { Auth, User } from 'src/common';
 import { UserEntity } from 'src/user/user.entity';
 import { AppResources } from 'src/app.roles';
+import { ResourceEntity } from 'src/resource/resource.entity';
 
 @ApiTags('Module')
 @Controller('coursemodule')
@@ -76,5 +77,13 @@ export class CoursemoduleController {
       return res
         .status(HttpStatus.FORBIDDEN)
         .json({ message: 'This is not your resource' });
+  }
+  @Get('/homeworksToDo/:idModule')
+  async getToDo(
+    @Res() res,
+    @Param('idModule') idModule: string,
+  ): Promise<ResourceEntity[]> {
+    const tareas = await this.coursemoduleService.getHomeworksToDo(idModule);
+    return res.status(HttpStatus.OK).json(tareas);
   }
 }
