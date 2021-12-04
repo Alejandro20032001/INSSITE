@@ -1,22 +1,9 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpStatus,
-  NotFoundException,
-  Param,
-  Post,
-  Put,
-  Res,
-} from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
 import { CreateHomeworkDto } from './dto/create-homework.dto';
 import { HomeworkService } from './homework.service';
 import { UserEntity } from 'src/user/user.entity';
 import { Auth, User } from 'src/common';
-import { ResourceEntity } from 'src/resource/resource.entity';
-import { CourseEntity } from 'src/course/course.entity';
 import { ApiTags } from '@nestjs/swagger';
-import { AppResources } from 'src/app.roles';
 
 @Controller('homework')
 @ApiTags('Homework')

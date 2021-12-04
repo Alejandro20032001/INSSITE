@@ -4,7 +4,6 @@ import { CourseEntity } from 'src/course/course.entity';
 import { CourseService } from 'src/course/course.service';
 import { CoursemoduleService } from 'src/coursemodule/coursemodule.service';
 import { HomeworkEntity } from 'src/homework/homework.entity';
-import { HomeworkService } from 'src/homework/homework.service';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './user.entity';

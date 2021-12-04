@@ -1,12 +1,10 @@
 import { ResourceEntity } from '../resource/resource.entity';
 import { UserEntity } from '../user/user.entity';
-import { CourseEntity } from '../course/course.entity';
 import {
   Column,
   Entity,
   JoinTable,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 @Entity('homework')

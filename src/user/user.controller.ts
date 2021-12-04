@@ -41,7 +41,6 @@ export class UserController {
   @Auth()
   @Get('/homeworks')
   async getMyhomeworks(@Res() res, @User() user: UserEntity) {
-    const idUser = user.idUser;
     const homeworks = await this.userService.getMyHomeworks(user);
     return res.status(HttpStatus.OK).json(homeworks);
   }
@@ -49,7 +48,6 @@ export class UserController {
   @Auth()
   @Get('/courses')
   async getMyCourses(@Res() res, @User() user: UserEntity) {
-    const idUser = user.idUser;
     const coursesFounded = await this.userService.getMyCourses(user);
     return res.status(HttpStatus.OK).json(coursesFounded);
   }
