@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HomeworkEntity } from 'src/homework/homework.entity';
 import { Repository } from 'typeorm';
 import { CreateResourceDto } from './dto/create-resource.dto';
 import { ResourceEntity } from './resource.entity';
@@ -25,5 +26,15 @@ export class ResourceService {
     const resourceFounded = await this.resourceRepository.findOne(idResource);
     delete resourceFounded.idResource;
     return resourceFounded;
+  }
+  async getHomeworks(resource: string): Promise<HomeworkEntity[]> {
+    const actualResource = this.getOneResource(resource);
+    if ((await actualResource).resourceType === 'TAREA') {
+      const homeworks = this.resourceRepository.find({
+        relations: ['homeworks'],
+        where: { resource: resource },
+      });
+      return homeworks[0].homework;
+    }
   }
 }
