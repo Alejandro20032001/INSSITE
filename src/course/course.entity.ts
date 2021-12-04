@@ -52,6 +52,7 @@ export class CourseEntity {
   @OneToMany(() => CourseModuleEntity, (coursemodule) => coursemodule.course)
   @JoinTable()
   modules: CourseModuleEntity[];
-  @OneToMany(() => HomeworkEntity, (homework) => homework.course)
-  homeworks: HomeworkEntity[];
+
+  /*@OneToMany(() => HomeworkEntity, (homework) => homework.course)
+  homeworks: HomeworkEntity[];*/
 }
