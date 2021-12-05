@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Put,
   HttpStatus,
   NotFoundException,
   Param,
@@ -81,5 +82,17 @@ export class UserController {
       hechas: tareasHechas,
       totales: tareasTotales,
     });
+  }
+
+  @Auth()
+  @Put('') //falta ruta
+  async setHomeworkScore(
+    @Res() res,
+    @Param('idResource') idResource: string,
+    @Param('score') score: number,
+    @User() user: UserEntity,
+  ){
+    const rev = await this.userService.setScore(user, idResource, score);
+    return res.status(HttpStatus.OK).json(rev);
   }
 }
