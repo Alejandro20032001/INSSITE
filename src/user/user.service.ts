@@ -18,6 +18,7 @@ export class UserService {
   constructor(
     private readonly courseService: CourseService,
     private readonly moduleService: CoursemoduleService,
+    private readonly homeworkService: HomeworkService,
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) {}
@@ -98,5 +99,11 @@ export class UserService {
       cont = cont + (await tareas).length;
     }
     return cont;
+  }
+
+  async setScore(user: UserEntity, idHomework: string, score: number) {
+    if (user.roles[0] === 'DOCENTE') {
+      return await this.homeworkService.setHomeworkScore(idHomework, score);
+    }
   }
 }
