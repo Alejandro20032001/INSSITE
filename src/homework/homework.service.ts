@@ -26,6 +26,14 @@ export class HomeworkService {
   async getAllHomeworks(): Promise<HomeworkEntity[]> {
     return await this.homeworkRepository.find({});
   }
+
+  async setHomeworkScore(idHomework: string, score: number) {
+    return await this.homeworkRepository.update(
+      { idHomework, score },
+      { score },
+    );
+  }
+
   /*async getAllHomeworksFromResource(
     resource: string,
   ): Promise<HomeworkEntity[]> {
