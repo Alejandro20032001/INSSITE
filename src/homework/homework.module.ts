@@ -8,5 +8,6 @@ import { HomeworkService } from './homework.service';
   imports: [TypeOrmModule.forFeature([HomeworkEntity])],
   controllers: [HomeworkController],
   providers: [HomeworkService],
+  exports: [HomeworkService],
 })
 export class HomeworkModule {}
