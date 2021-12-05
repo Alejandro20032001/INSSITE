@@ -1,32 +1,25 @@
 import { ResourceEntity } from '../resource/resource.entity';
 import { UserEntity } from '../user/user.entity';
-import { CourseEntity } from '../course/course.entity';
 import {
   Column,
   Entity,
   JoinTable,
   ManyToOne,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 @Entity('homework')
 export class HomeworkEntity {
   @PrimaryGeneratedColumn('uuid')
   idHomework?: string;
-  /*@Column({
-    type: 'varchar',
-    length: 255,
-  })
-  idCourse?: string;*/
-  @Column({
-    type: 'varchar',
-    length: 255,
-  })
-  content: string;
 
   @Column({
     type: 'varchar',
     length: 1000,
+  })
+  content: string;
+
+  @Column({
+    type: 'integer',
     nullable: true,
   })
   score?: number;
@@ -40,7 +33,4 @@ export class HomeworkEntity {
   @ManyToOne(() => UserEntity, (user) => user.homeworks, { eager: true })
   @JoinTable()
   userDone: UserEntity;
-  /*@ManyToOne(() => CourseEntity, (course) => course.homeworks, { eager: true })
-  @JoinTable()
-  course: ResourceEntity;*/
 }
