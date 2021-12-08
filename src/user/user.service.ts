@@ -4,6 +4,7 @@ import { CourseEntity } from 'src/course/course.entity';
 import { CourseService } from 'src/course/course.service';
 import { CoursemoduleService } from 'src/coursemodule/coursemodule.service';
 import { HomeworkEntity } from 'src/homework/homework.entity';
+import { HomeworkService } from 'src/homework/homework.service';
 import { ResourceEntity } from 'src/resource/resource.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -99,11 +100,5 @@ export class UserService {
       if (tareas.length !== 0) cont.push(tareas);
     }
     return cont[0];
-  }
-
-  async setScore(user: UserEntity, idHomework: string, score: number) {
-    if (user.roles[0] === 'DOCENTE') {
-      return await this.homeworkService.setHomeworkScore(idHomework, score);
-    }
   }
 }

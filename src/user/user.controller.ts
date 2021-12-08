@@ -80,13 +80,14 @@ export class UserController {
     let tareasHechas = null;
 
     if (user.roles[0] === 'DOCENTE') {
-      console.log(query.idStudent);
       if (query.idStudent === undefined)
         res.status(HttpStatus.METHOD_NOT_ALLOWED).json({
           message: 'Missing id student',
         });
-      else
-        tareasHechas = await this.userService.getMyHomeworks(query.idStudent);
+      else {
+        const userAux = await this.userService.getOneUser(query.idStudent);
+        tareasHechas = await this.userService.getMyHomeworks(userAux);
+      }
     } else if (user.roles[0] === 'ESTUDIANTE')
       tareasHechas = await this.userService.getMyHomeworks(user);
 
@@ -110,6 +111,7 @@ export class UserController {
 
       notaGeneral = notaGeneral + tareasTotales[i].score;
     }
+
     res.status(HttpStatus.OK).json({
       tareasHechas,
       tareasTotales,
@@ -117,17 +119,5 @@ export class UserController {
       notaGeneral,
       notaAcumulada,
     });
-  }
-
-  @Auth()
-  @Put('') //falta ruta
-  async setHomeworkScore(
-    @Res() res,
-    @Param('idResource') idResource: string,
-    @Param('score') score: number,
-    @User() user: UserEntity,
-  ) {
-    const rev = await this.userService.setScore(user, idResource, score);
-    return res.status(HttpStatus.OK).json(rev);
   }
 }
