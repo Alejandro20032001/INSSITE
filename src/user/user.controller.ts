@@ -126,7 +126,7 @@ export class UserController {
     @Param('idResource') idResource: string,
     @Param('score') score: number,
     @User() user: UserEntity,
-  ){
+  ) {
     const rev = await this.userService.setScore(user, idResource, score);
     return res.status(HttpStatus.OK).json(rev);
   }

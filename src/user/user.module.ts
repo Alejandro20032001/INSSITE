@@ -12,7 +12,7 @@ import { UserService } from './user.service';
     TypeOrmModule.forFeature([UserEntity]),
     CourseModule,
     CoursemoduleModule,
-    HomeworkModule
+    HomeworkModule,
   ],
   controllers: [UserController],
   providers: [UserService],
