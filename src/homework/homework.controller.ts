@@ -1,4 +1,13 @@
-import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpStatus,
+  Param,
+  Post,
+  Put,
+  Res,
+} from '@nestjs/common';
 import { CreateHomeworkDto } from './dto/create-homework.dto';
 import { HomeworkService } from './homework.service';
 import { UserEntity } from 'src/user/user.entity';
@@ -33,14 +42,15 @@ export class HomeworkController {
     return res.status(HttpStatus.OK).json(homeworksFounded);
   }
 
-  /*@Get('/homeworks/:idResource')
-  async getAllHomeworksFromResource(
+  @Auth()
+  @Put('/:idHomework/:score') //falta ruta
+  async setHomeworkScore(
     @Res() res,
-    @Param('idResource') idResource: string,
+    @Param('idHomework') idResource: string,
+    @Param('score') score: number,
   ) {
-    const homeworks = await this.homeworkService.getAllHomeworksFromResource(
-      idResource,
-    );
-    return res.status(HttpStatus.OK).json(homeworks);
-  }*/
+    const rev = await this.homeworkService.setHomeworkScore(idResource, score);
+    if (rev.affected === 0) return res.status(HttpStatus.NOT_FOUND).json(rev);
+    else return res.status(HttpStatus.OK).json(rev);
+  }
 }
