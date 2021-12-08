@@ -7,9 +7,10 @@ import {
   NotFoundException,
   Param,
   Post,
+  Query,
   Res,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiQuery } from '@nestjs/swagger';
 import { Auth, User } from 'src/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './user.entity';
@@ -42,7 +43,6 @@ export class UserController {
   @Auth()
   @Get('/homeworks')
   async getMyhomeworks(@Res() res, @User() user: UserEntity) {
-    const idUser = user.idUser;
     const homeworks = await this.userService.getMyHomeworks(user);
     return res.status(HttpStatus.OK).json(homeworks);
   }
@@ -50,7 +50,6 @@ export class UserController {
   @Auth()
   @Get('/courses')
   async getMyCourses(@Res() res, @User() user: UserEntity) {
-    const idUser = user.idUser;
     const coursesFounded = await this.userService.getMyCourses(user);
     return res.status(HttpStatus.OK).json(coursesFounded);
   }
@@ -68,19 +67,55 @@ export class UserController {
     return res.status(HttpStatus.OK).json(usersFounded);
   }
 
+  @ApiQuery({ name: 'idStudent', type: 'string', required: false })
   @Auth()
   @Get('/processOf/:idCourse')
   async getProcessOfCourse(
     @Res() res,
     @Param('idCourse') idCourse: string,
     @User() user,
+    @Query() query,
   ) {
-    const tareasHechas = (await this.userService.getMyHomeworks(user)).length;
     const tareasTotales = await this.userService.getTotalToDo(idCourse);
-    //console.log(tareasTotales);
+    let tareasHechas = null;
+
+    if (user.roles[0] === 'DOCENTE') {
+      console.log(query.idStudent);
+      if (query.idStudent === undefined)
+        res.status(HttpStatus.METHOD_NOT_ALLOWED).json({
+          message: 'Missing id student',
+        });
+      else
+        tareasHechas = await this.userService.getMyHomeworks(query.idStudent);
+    } else if (user.roles[0] === 'ESTUDIANTE')
+      tareasHechas = await this.userService.getMyHomeworks(user);
+
+    const tareasFaltantes = [];
+    let notaGeneral = 0;
+    let notaAcumulada = 0;
+
+    for (let i = 0; i < tareasTotales.length; i++) {
+      let contiene = false;
+      for (let j = 0; j < tareasHechas.length; j++) {
+        if (i === tareasTotales.length - 1)
+          notaAcumulada = notaAcumulada + parseInt(tareasHechas[j].score);
+        if (
+          tareasTotales[j].idResource === tareasHechas[j].resource.idResource
+        ) {
+          contiene = true;
+          break;
+        }
+      }
+      if (!contiene) tareasFaltantes.push(tareasTotales[i]);
+
+      notaGeneral = notaGeneral + tareasTotales[i].score;
+    }
     res.status(HttpStatus.OK).json({
-      hechas: tareasHechas,
-      totales: tareasTotales,
+      tareasHechas,
+      tareasTotales,
+      tareasFaltantes,
+      notaGeneral,
+      notaAcumulada,
     });
   }
 

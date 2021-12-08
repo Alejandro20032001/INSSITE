@@ -9,7 +9,6 @@ import {
   JoinTable,
   ManyToMany,
   OneToMany,
-  OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { UserEnum } from './enum/user.enum';

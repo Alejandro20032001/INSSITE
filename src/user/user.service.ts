@@ -4,7 +4,7 @@ import { CourseEntity } from 'src/course/course.entity';
 import { CourseService } from 'src/course/course.service';
 import { CoursemoduleService } from 'src/coursemodule/coursemodule.service';
 import { HomeworkEntity } from 'src/homework/homework.entity';
-import { HomeworkService } from 'src/homework/homework.service';
+import { ResourceEntity } from 'src/resource/resource.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './user.entity';
@@ -87,18 +87,18 @@ export class UserService {
     return homework[0].homeworks;
   }
 
-  async getTotalToDo(idCourse: string): Promise<number> {
+  async getTotalToDo(idCourse: string): Promise<ResourceEntity[]> {
     const modules = await this.courseService.getAllModulesFromThisCourse(
       idCourse,
     );
-    let cont = 0;
+    const cont = [];
     for (let i = 0; i < (await modules).length; i++) {
       const tareas = await this.moduleService.getHomeworksToDo(
         modules[i].idModule,
       );
-      cont = cont + (await tareas).length;
+      if (tareas.length !== 0) cont.push(tareas);
     }
-    return cont;
+    return cont[0];
   }
 
   async setScore(user: UserEntity, idHomework: string, score: number) {

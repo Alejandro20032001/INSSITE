@@ -1,6 +1,5 @@
 import { UserEntity } from '../user/user.entity';
 import { CourseModuleEntity } from '../coursemodule/coursemodule.entity';
-import { HomeworkEntity } from 'src/homework/homework.entity';
 import {
   Column,
   Entity,
@@ -10,7 +9,6 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { CourseEnum } from './enum/course.enum';
 
 @Entity('course')
 export class CourseEntity {
