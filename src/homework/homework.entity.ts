@@ -21,6 +21,7 @@ export class HomeworkEntity {
   @Column({
     type: 'integer',
     nullable: true,
+    default: 0,
   })
   score?: number;
 
