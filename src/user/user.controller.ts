@@ -65,6 +65,16 @@ export class UserController {
     const usersFounded = await this.userService.getAllUsers();
     return res.status(HttpStatus.OK).json(usersFounded);
   }
+  @Auth()
+  @Get('/getMissingHomeworks/:idModule')
+  async getMissingHomework(
+    @Res() res,
+    @Param('idModule') idModule: string,
+    @User() user: UserEntity,
+  ) {
+    const missing = await this.userService.missingHomework(idModule, user);
+    return res.status(HttpStatus.OK).json(missing);
+  }
 
   @ApiQuery({ name: 'idStudent', type: 'string', required: false })
   @Auth()

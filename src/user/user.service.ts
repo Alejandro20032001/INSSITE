@@ -101,4 +101,28 @@ export class UserService {
     }
     return cont[0];
   }
+
+  async missingHomework(
+    idModule: string,
+    user: UserEntity,
+  ): Promise<ResourceEntity[]> {
+    const homeworksResource = await this.moduleService.getHomeworksToDo(
+      idModule,
+    );
+    const homeworksResponce = await this.getMyHomeworks(user);
+    const answer = [];
+    const contiene = false;
+    for (let i = 0; i < (await homeworksResource).length; i++) {
+      for (let j = 0; j < (await homeworksResponce).length; j++) {
+        let contiene = false;
+        if (
+          homeworksResponce[j].resource.idResource ===
+          homeworksResource[i].idResource
+        )
+          contiene = true;
+      }
+      if (!contiene) answer.push(homeworksResource[i]);
+    }
+    return answer;
+  }
 }
