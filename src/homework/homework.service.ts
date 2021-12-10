@@ -30,4 +30,6 @@ export class HomeworkService {
   async setHomeworkScore(idHomework: string, score: number) {
     return await this.homeworkRepository.update({ idHomework }, { score });
   }
+
+ 
 }

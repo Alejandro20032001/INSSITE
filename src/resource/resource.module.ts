@@ -8,5 +8,6 @@ import { ResourceService } from './resource.service';
   imports: [TypeOrmModule.forFeature([ResourceEntity])],
   controllers: [ResourceController],
   providers: [ResourceService],
+  exports: [ResourceService],
 })
 export class ResourceModule {}

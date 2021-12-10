@@ -17,6 +17,7 @@ import { Auth, User } from 'src/common';
 import { UserEntity } from 'src/user/user.entity';
 import { AppResources } from 'src/app.roles';
 import { ResourceEntity } from 'src/resource/resource.entity';
+import { HomeworkEntity } from 'src/homework/homework.entity';
 
 @ApiTags('Module')
 @Controller('coursemodule')
@@ -84,6 +85,17 @@ export class CoursemoduleController {
     @Param('idModule') idModule: string,
   ): Promise<ResourceEntity[]> {
     const tareas = await this.coursemoduleService.getHomeworksToDo(idModule);
+    return res.status(HttpStatus.OK).json(tareas);
+  }
+
+  @Get('/homeworksToCheck/:idModule')
+  async getToCheck(
+    @Res() res,
+    @Param('idModule') idModule: string,
+  ): Promise<HomeworkEntity[]> {
+    const tareas = await this.coursemoduleService.getScorelessHomeworks(
+      idModule,
+    );
     return res.status(HttpStatus.OK).json(tareas);
   }
 }

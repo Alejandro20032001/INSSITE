@@ -4,10 +4,13 @@ import { Repository } from 'typeorm';
 import { CreateModuleDto } from './dto/create-module.dto';
 import { CourseModuleEntity } from './coursemodule.entity';
 import { ResourceEntity } from 'src/resource/resource.entity';
+import { HomeworkEntity } from 'src/homework/homework.entity';
+import { ResourceService } from 'src/resource/resource.service';
 
 @Injectable()
 export class CoursemoduleService {
   constructor(
+    private readonly resourceService: ResourceService,
     @InjectRepository(CourseModuleEntity)
     private readonly coursemoduleRepository: Repository<CourseModuleEntity>,
   ) {}
@@ -44,4 +47,24 @@ export class CoursemoduleService {
     }
     return answer;
   }
+
+  async getScorelessHomeworks(idModule: string): Promise<HomeworkEntity[]> {
+    const resources = await this.getResources(idModule);
+    let resHomeworks = [];
+    const answer = [];
+    for (let i = 0; i < (await resources).length; i++) {
+      if (resources[i].resourceType === 'TAREA'){
+        resHomeworks = await this.resourceService.getHomeworks(
+          resources[i].idResource,
+        );
+        for (let j = 0; j < (await resHomeworks).length; j++) {
+          if (resHomeworks[j].score == 0) {
+            answer.push(resHomeworks[j]);
+          }
+        }
+      }
+    }
+    return answer;
+  }
+
 }
