@@ -4,4 +4,5 @@ export class CreateResourceDto {
   descriptionResource: string;
   content: string;
   module: CourseModuleEntity;
+  orderResource: number;
 }
