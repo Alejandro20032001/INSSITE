@@ -110,7 +110,7 @@ export class UserController {
         if (i === tareasTotales.length - 1)
           notaAcumulada = notaAcumulada + parseInt(tareasHechas[j].score);
         if (
-          tareasTotales[j].idResource === tareasHechas[j].resource.idResource
+          tareasTotales[i].idResource === tareasHechas[j].resource.idResource
         ) {
           contiene = true;
           break;
