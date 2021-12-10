@@ -113,16 +113,18 @@ export class UserService {
     const answer = [];
     const contiene = false;
     for (let i = 0; i < (await homeworksResource).length; i++) {
+      let contiene = false;
       for (let j = 0; j < (await homeworksResponce).length; j++) {
-        let contiene = false;
         if (
           homeworksResponce[j].resource.idResource ===
           homeworksResource[i].idResource
         )
           contiene = true;
       }
+
       if (!contiene) answer.push(homeworksResource[i]);
     }
+    //console.log(answer);
     return answer;
   }
 }
