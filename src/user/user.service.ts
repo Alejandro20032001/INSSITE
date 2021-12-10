@@ -100,7 +100,7 @@ export class UserService {
       );
       if (tareas.length !== 0) cont.push(tareas);
     }
-    return cont[0];
+    return cont;
   }
 
   async missingHomework(
