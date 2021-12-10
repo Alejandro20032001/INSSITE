@@ -65,4 +65,11 @@ export class ResourceEntity {
   @OneToMany(() => HomeworkEntity, (homework) => homework.resource)
   @JoinTable()
   homeworks: HomeworkEntity[];
+
+  @Column({
+    type: 'integer',
+    nullable: false,
+    default: 0,
+  })
+  orderResource: number;
 }
