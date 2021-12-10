@@ -101,28 +101,30 @@ export class UserController {
       tareasHechas = await this.userService.getMyHomeworks(user);
 
     const tareasFaltantes = [];
+    const tareasHechasDelCurso = [];
     let notaGeneral = 0;
     let notaAcumulada = 0;
-
     for (let i = 0; i < tareasTotales.length; i++) {
       let contiene = false;
       for (let j = 0; j < tareasHechas.length; j++) {
         if (i === tareasTotales.length - 1)
           notaAcumulada = notaAcumulada + parseInt(tareasHechas[j].score);
         if (
-          tareasTotales[i].idResource === tareasHechas[j].resource.idResource
+          tareasTotales[i][0].idResource === tareasHechas[j].resource.idResource
         ) {
+          console.log('entra');
+          tareasHechasDelCurso.push(tareasHechas[j]);
           contiene = true;
           break;
         }
       }
       if (!contiene) tareasFaltantes.push(tareasTotales[i]);
 
-      notaGeneral = notaGeneral + tareasTotales[i].score;
+      notaGeneral = notaGeneral + tareasTotales[i][0].score;
     }
 
     res.status(HttpStatus.OK).json({
-      tareasHechas,
+      tareasHechasDelCurso,
       tareasTotales,
       tareasFaltantes,
       notaGeneral,
