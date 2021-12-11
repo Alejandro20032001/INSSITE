@@ -27,14 +27,14 @@ export class ResourceService {
     delete resourceFounded.idResource;
     return resourceFounded;
   }
-  async getHomeworks(resource: string): Promise<HomeworkEntity[]> {
-    const actualResource = this.getOneResource(resource);
+  async getHomeworks(idResource: string): Promise<HomeworkEntity[]> {
+    const actualResource = await this.getOneResource(idResource);
     if ((await actualResource).resourceType === 'TAREA') {
-      const homeworks = this.resourceRepository.find({
+      const homeworks = await this.resourceRepository.find({
         relations: ['homeworks'],
-        where: { resource: resource },
+        where: { idResource },
       });
-      return homeworks[0].homework;
+      return homeworks[0].homeworks;
     }
   }
 }
