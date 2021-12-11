@@ -74,7 +74,7 @@ export class UserService {
     } else if (user.roles[0] === 'DOCENTE') {
       const idUser = user.idUser;
       courses = await this.courseService.getAllCoursesFromTeacher(idUser);
-      return courses;
+      return courses.courses;
     }
   }
   async getMyHomeworks(user: UserEntity): Promise<HomeworkEntity[]> {
