@@ -4,12 +4,15 @@ import { Repository } from 'typeorm';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { CourseEntity } from './course.entity';
 import { UserEntity } from 'src/user/user.entity';
-import { User } from 'src/common';
-import { CourseModuleEntity } from 'src/coursemodule/coursemodule.entity';
+import { User } from '../common/user.decorator';
+import { CourseModuleEntity } from '../coursemodule/coursemodule.entity';
+import { HomeworkEntity } from 'src/homework/homework.entity';
+import { CoursemoduleService } from 'src/coursemodule/coursemodule.service';
 
 @Injectable()
 export class CourseService {
   constructor(
+    private readonly moduleService: CoursemoduleService,
     @InjectRepository(CourseEntity)
     private readonly courseRepository: Repository<CourseEntity>,
   ) {}
@@ -70,5 +73,18 @@ export class CourseService {
       where: { idCourse: course },
     });
     return modules[0].modules;
+  }
+
+  async getAllHomeworksToCheck(idCourse: string): Promise<HomeworkEntity[]> {
+    const modules = await this.getAllModulesFromThisCourse(idCourse);
+    const answer = [];
+    for (let i = 0; i < modules.length; i++) {
+      const homeworks = await this.moduleService.getScorelessHomeworks(
+        modules[i].idModule,
+      );
+      if (homeworks.length !== 0)
+        homeworks.forEach((homework) => answer.push(homework));
+    }
+    return answer;
   }
 }
