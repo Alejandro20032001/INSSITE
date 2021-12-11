@@ -58,7 +58,7 @@ export class UserService {
       .where(data)
       .addSelect('user.password')
       .getOne();
-    if (find.username !== data.username) return null;
+    if (find === undefined || find.username !== data.username) return null;
 
     return find;
   }
