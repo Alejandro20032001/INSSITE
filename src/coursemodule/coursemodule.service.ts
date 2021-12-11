@@ -53,7 +53,7 @@ export class CoursemoduleService {
     let resHomeworks = [];
     const answer = [];
     for (let i = 0; i < (await resources).length; i++) {
-      if (resources[i].resourceType === 'TAREA'){
+      if (resources[i].resourceType === 'TAREA') {
         resHomeworks = await this.resourceService.getHomeworks(
           resources[i].idResource,
         );
@@ -66,5 +66,4 @@ export class CoursemoduleService {
     }
     return answer;
   }
-
 }
