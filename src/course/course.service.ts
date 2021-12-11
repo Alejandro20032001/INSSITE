@@ -82,8 +82,11 @@ export class CourseService {
       const homeworks = await this.moduleService.getScorelessHomeworks(
         modules[i].idModule,
       );
-      if (homeworks.length !== 0)
-        homeworks.forEach((homework) => answer.push(homework));
+      if (homeworks.length !== 0) {
+        for (let j = 0; j < homeworks.length; j++) {
+          if (homeworks[j].score === 0) answer.push(homeworks[j]);
+        }
+      }
     }
     return answer;
   }
