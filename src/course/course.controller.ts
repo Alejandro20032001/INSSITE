@@ -11,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { CourseService } from './course.service';
-import { Auth, User } from 'src/common';
+import { Auth, User } from '../common/index';
 import { UserEntity } from 'src/user/user.entity';
 import { ApiTags } from '@nestjs/swagger';
 import { InjectRolesBuilder, RolesBuilder } from 'nest-access-control';
@@ -89,5 +89,13 @@ export class CourseController {
       idCourse,
     );
     return res.status(HttpStatus.OK).json(modules);
+  }
+
+  @Get('/homeworksToCheck/:idCourse')
+  async getHomeworksToCheck(@Param('idCourse') idCourse: string, @Res() res) {
+    const homeworksToCheck = await this.courseService.getAllHomeworksToCheck(
+      idCourse,
+    );
+    return res.status(HttpStatus.OK).json(homeworksToCheck);
   }
 }
