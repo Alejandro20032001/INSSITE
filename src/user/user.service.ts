@@ -70,7 +70,7 @@ export class UserService {
         relations: ['courses'],
         where: { idUser },
       });
-      return courses;
+      return courses[0].courses;
     } else if (user.roles[0] === 'DOCENTE') {
       const idUser = user.idUser;
       courses = await this.courseService.getAllCoursesFromTeacher(idUser);
